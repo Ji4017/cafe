@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+    {% block title %}Netflix - Movie{% endblock title %}
+    {% block others %}
+    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+    <style>
+        .player::-webkit-progress-bar{
+            color: red;
+        }
+    </style>
+    {% endblock others %}
+{% block content %}
+
+    <main class='bg-primary_black h-full w-full '>
+
+        <iframe  class="w-full h-screen player" src="{{movie.videos}}"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        
+    </main>
+    
+{% endblock content %}

@@ -56,6 +56,13 @@ class Post(models.Model):
     def get_file_ext(self):
         return self.get_file_name().split('.')[-1]
 
+class Restaurant(models.Model):
+
+    name=models.CharField(max_length=15)
+    location=models.CharField(max_length=50,default='')
+
+    latitude=models.FloatField(default=0.0)
+    longitude=models.FloatField(default=0.0)
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

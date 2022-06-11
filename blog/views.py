@@ -12,7 +12,7 @@ from .forms import CommentForm
 class PostList(ListView):
     model = Post
     ordering = '-pk'
-    paginate_by = 5
+    paginate_by = 6
 
     def get_context_data(self, **kwargs):
         context = super(PostList, self).get_context_data()
@@ -200,3 +200,4 @@ class PostSearch(PostList):
         context['search_info'] = f'Search: {q} ({self.get_queryset().count()})'
 
         return context
+

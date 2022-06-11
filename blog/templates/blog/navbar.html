@@ -1,8 +1,8 @@
 {% load socialaccount %}
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #ffffff">
     <div class="container">
-        <a class="navbar-brand" href="/">Do It Django</a>
+        <a class="navbar-brand" href="/">아침밥 꼭 챙겨먹어라잉</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -10,28 +10,50 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/">Home</a>
+                    <a class="nav-link" href="/blog/">홈</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/blog/">Blog</a>
+                    <a class="nav-link" href="/">qweqweqwewqeqwewqewqeqweqeeqweqweq</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/about_me/">About Me</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">카테고리</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        {% for category in categories %}
+                            <a class="dropdown-item" href="{{ category.get_absolute_url }}">{{ category }}
+                                ({{ category.post_set.count }})</a>
+                        {% endfor %}
+                        <a class="dropdown-item" href="/blog/category/no_category/">미분류
+                            ({{ no_category_post_count }})</a>
+                    </div>
                 </li>
+                <!-- Search  -->
+                <input type="text" class="form-control" placeholder="음식 또는 식당명 입력" id="search-input">
+                <span class="input-group-btn">
+                        <button class="btn btn-secondary" type="button" onclick="searchPost();">Go</button>
+                </span>
             </ul>
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ user.username }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="/accounts/logout/">Log Out</a>
+                            <a class="dropdown-item" href="/accounts/logout/">로그아웃</a>
+                            {% if user.is_authenticated %}
+                                {% if user.is_superuser or user.is_staff %}
+                                    <a class="dropdown-item" href="/blog/create_post/">글 쓰기</a>
+                                {% endif %}
+                            {% endif %}
                         </div>
+
                     </li>
+
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Log In</a>
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">로그인</a>
                     </li>
                 {% endif %}
             </ul>
@@ -45,7 +67,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="loginModalLabel"> <i class="fas fa-sign-in-alt"></i>&nbsp Log In</h5>
+                <h5 class="modal-title" id="loginModalLabel"><i class="fas fa-sign-in-alt"></i>&nbsp Log In</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -53,11 +75,15 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <a role="button" class="btn btn-outline-dark btn-block btn-sm" href="{% provider_login_url 'google' %}"><i class="fab fa-google"></i>&nbsp&nbsp Log in with Google</a>
-                        <a role="button" class="btn btn-outline-dark btn-block btn-sm" href="/accounts/login/"><i class="far fa-envelope"></i>&nbsp&nbsp Log in with E-mail</a>
+                        <a role="button" class="btn btn-outline-dark btn-block btn-sm"
+                           href="{% provider_login_url 'google' %}"><i class="fab fa-google"></i>&nbsp&nbsp Log in with
+                            Google</a>
+                        <a role="button" class="btn btn-outline-dark btn-block btn-sm" href="/accounts/login/"><i
+                                class="far fa-envelope"></i>&nbsp&nbsp Log in with E-mail</a>
                     </div>
                     <div class="col-md-6">
-                        <a role="button" class="btn btn-outline-dark btn-block btn-sm" href="/accounts/signup/"><i class="far fa-envelope"></i>&nbsp&nbsp Sign Up with E-mail</a>
+                        <a role="button" class="btn btn-outline-dark btn-block btn-sm" href="/accounts/signup/"><i
+                                class="far fa-envelope"></i>&nbsp&nbsp Sign Up with E-mail</a>
                     </div>
                 </div>
             </div>

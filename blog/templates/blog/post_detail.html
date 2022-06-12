@@ -2,13 +2,19 @@
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 {% load static %}
+
 {% block head_title %}
     {{ post.title }} - Blog
 {% endblock %}
 
-
 {% block main_area %}
-    <div id="post-area">
+    <div class="row">
+        <div class="col-4" id="category-area">
+
+        </div>
+
+    </div>
+    <div class="col-8" id="post-area">
         {% if post.category %}
             <span class="badge badge-secondary float-right">{{ post.category }}</span>
         {% else %}
